@@ -11,7 +11,7 @@ interface TeamMember {
   position: string;
   image?: string;
 }
-
+  
 const teamMembers: TeamMember[] = [
   { name: "Kaashvi R", position: "President", image: "/Team/Kaashvi.png" },
   { name: "Neha Nair", position: "Vice President", image: "/Team/Neha Nair_VP.jpg" },
