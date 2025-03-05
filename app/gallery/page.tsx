@@ -7,18 +7,20 @@ export default function GalleryPage() {
   const galleryPath = path.join(process.cwd(), 'public', 'Gallery');
   const images = fs.readdirSync(galleryPath);
 
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+  const filteredImages = images.filter((image) =>
+    imageExtensions.includes(path.extname(image).toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
       <div className="container mx-auto px-4 py-15">
-        <h1
-          className="text-5xl md:text-7xl font-bold mb-8 text-center"
-          style={{ marginTop: '5rem' }}
-        >
+        <h1 className="text-5xl md:text-7xl font-bold mb-8 text-center" style={{ marginTop: '5rem' }}>
           Our Gallery
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-          {images.map((image, index) => {
+          {filteredImages.map((image, index) => {
             const src = `/Gallery/${image}`;
             return (
               <div

@@ -1,125 +1,157 @@
-'use client'
+"use client"
 
-import React from 'react'
-import Image from 'next/image'
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { MeshGradient } from "@/components/ui/mesh-gradient"
-import { Timeline } from "@/components/ui/timeline"
-import { Marquee } from "@/components/ui/marquee"
-import Header from '@/components/ui/header'
+import { Input } from "@/components/ui/input"
+import { Instagram, Twitter, Linkedin, Mail, ArrowRight } from 'lucide-react'
 
-export default function About() {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-     <Header/>
-    <div className="min-h-screen bg-background text-foreground">
+export default function ComingSoon() {
+  const [email, setEmail] = useState("")
+  const [days, setDays] = useState(0)
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+
+  // Set launch date to 30 days from now
+  useEffect(() => {
+    const launchDate = new Date()
+    launchDate.setDate(launchDate.getDate() + 15)
+    
+    const interval = setInterval(() => {
+      const now = new Date()
+      const difference = launchDate.getTime() - now.getTime()
       
-
-      {/* Hero Section with Large Image */}
-      <section className="relative h-[100vh] overflow-hidden"> 
-        <Image
-          src="/assets/about _hero.png" // Correct image path
-          alt="E-CLUB members collaborating"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
+      const d = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+      const s = Math.floor((difference % (1000 * 60)) / 1000)
+      
+      setDays(d)
+      setHours(h)
+      setMinutes(m)
+      setSeconds(s)
+      
+      if (difference <= 0) {
+        clearInterval(interval)
+      }
+    }, 1000)
+    
+    return () => clearInterval(interval)
+  }, [])
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Handle email submission logic here
+    alert(`Thank you! We'll notify ${email} when we launch.`)
+    setEmail("")
+  }
+  
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#050A1C] to-[#0F1A3B] text-white px-4">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#1e3a8a_0.1,transparent_2px)] bg-[length:24px_24px]"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      
+      {/* Animated Stars */}
+      <div className="stars absolute inset-0 overflow-hidden opacity-70">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div 
+            key={i}
+            className="star absolute w-1 h-1 bg-white rounded-full animate-pulse"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 3}s`
+            }}
+          ></div>
+        ))}
+      </div>
+      
+      {/* Main Content */}
+      <div className="relative z-10 max-w-3xl w-full text-center space-y-8 backdrop-blur-sm p-8 rounded-2xl border border-blue-900/30 shadow-[0_0_25px_rgba(59,130,246,0.2)]">
+        {/* Logo or Brand Name */}
+        <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+          <span className="text-2xl font-bold">Hey</span>
         </div>
-      </section>
-
-      {/* About Us Section */}
-      <section className="py-20 px-4 relative overflow-hidden">
-        <MeshGradient className="absolute inset-0 opacity-30" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
-            Our Mission
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 text-center">
-            E-CLUB is dedicated to fostering entrepreneurship and innovation among students at PESU. We believe in the power of ideas and the potential of young minds to shape the future of business and technology.
-          </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-background/50 backdrop-blur-sm border-primary/20">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-4 text-primary">What We Do</h3>
-                <ul className="list-disc list-inside text-muted-foreground">
-                  <li>Organize workshops and seminars</li>
-                  <li>Provide mentorship opportunities</li>
-                  <li>Host startup competitions</li>
-                  <li>Facilitate networking events</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="bg-background/50 backdrop-blur-sm border-primary/20">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-4 text-primary">Our Values</h3>
-                <ul className="list-disc list-inside text-muted-foreground">
-                  <li>Innovation and creativity</li>
-                  <li>Collaboration and teamwork</li>
-                  <li>Continuous learning</li>
-                  <li>Ethical entrepreneurship</li>
-                </ul>
-              </CardContent>
-            </Card>
+        
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+          <span className="block">We're</span>
+          <span className="block text-blue-400 mt-2">Coming Soon</span>
+        </h1>
+        
+        <p className="text-lg md:text-xl text-blue-200 max-w-xl mx-auto">
+          We're working hard to bring you something amazing. Stay tuned for updates on our launch.
+        </p>
+        
+        {/* Countdown Timer */}
+        <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto">
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+            <div className="text-2xl md:text-4xl font-bold text-white">{days}</div>
+            <div className="text-xs md:text-sm text-blue-300">Days</div>
+          </div>
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+            <div className="text-2xl md:text-4xl font-bold text-white">{hours}</div>
+            <div className="text-xs md:text-sm text-blue-300">Hours</div>
+          </div>
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+            <div className="text-2xl md:text-4xl font-bold text-white">{minutes}</div>
+            <div className="text-xs md:text-sm text-blue-300">Minutes</div>
+          </div>
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+            <div className="text-2xl md:text-4xl font-bold text-white">{seconds}</div>
+            <div className="text-xs md:text-sm text-blue-300">Seconds</div>
           </div>
         </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="py-20 px-4 bg-muted relative overflow-hidden">
-        <MeshGradient className="absolute inset-0 opacity-30" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
-            Our Journey
-          </h2>
-          <Timeline
-            events={[
-              { year: 2018, title: "E-CLUB Founded", description: "A group of passionate students came together to create a hub for entrepreneurship." },
-              { year: 2019, title: "First Startup Weekend", description: "Organized our inaugural 54-hour startup event, with over 100 participants." },
-              { year: 2020, title: "Virtual Pivot", description: "Successfully transitioned all events and mentorship programs to virtual platforms." },
-              { year: 2021, title: "Launch of Incubator Program", description: "Established a dedicated space and resources for student startups." },
-              { year: 2022, title: "National Recognition", description: "Received award for 'Best College Entrepreneurship Club' at a national conference." },
-              { year: 2023, title: "Global Partnerships", description: "Formed alliances with international entrepreneurship organizations and universities." },
-            ]}
-          />
+        
+        {/* Notification Form */}
+        <div className="max-w-md mx-auto w-full mt-8">
+          <p className="text-sm text-blue-200 mb-4">Get notified when we launch:</p>
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="bg-black/30 border-blue-900/50 text-white placeholder:text-blue-300/50 focus:border-blue-400 focus:ring-blue-400/20"
+            />
+            <Button 
+              type="submit" 
+              className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
+            >
+              Notify Me
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </form>
         </div>
-      </section>
-
-      {/* Marquee Section */}
-      <section className="py-20 px-4 relative overflow-hidden">
-        <MeshGradient className="absolute inset-0 opacity-30" />
-        <div className="max-w-7xl mx-auto relative z-7">
-          <h2 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
-            TOP EVENTS HOSTED BY E CLUB
-          </h2>
-          <Marquee
-            items={[
-              { name: "Wolf of Wall Street", logo: "/Events_past/wow.png" },
-              { name: "Brand Blitz", logo: "/Events_past/brand.png" },
-              { name: "BID 2 Build", logo: "/Events_past/B2B.png" },
-              { name: "E Summit 23", logo: "/Events_past/esummit.png" },
-              { name: "She Summit", logo: "/Events_past/she.png" },
-            ]}
-          />
+        
+        {/* Social Media Links */}
+        <div className="flex justify-center space-x-6 mt-8">
+          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
+            <Instagram size={20} />
+            <span className="sr-only">Instagram</span>
+          </a>
+          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
+            <Twitter size={20} />
+            <span className="sr-only">Twitter</span>
+          </a>
+          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
+            <Linkedin size={20} />
+            <span className="sr-only">LinkedIn</span>
+          </a>
+          <a href="mailto:info@example.com" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
+            <Mail size={20} />
+            <span className="sr-only">Email</span>
+          </a>
         </div>
-      </section>
-
-      {/* Contact Us Section */}
-      <section className="py-20 px-4 bg-muted relative overflow-hidden">
-        <MeshGradient className="absolute inset-0 opacity-30" />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
-            Get in Touch
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Interested in joining E-CLUB or have any questions? We&apos;d love to hear from you!
-          </p>
-          <Button size="lg" className="bg-gradient-to-r from-primary to-purple-500 hover:from-primary/80 hover:to-purple-500/80 text-primary-foreground">
-            Contact Us
-          </Button>
-        </div>
-      </section>
-    </div>
+      </div>
+      
+      {/* Footer */}
+      <div className="absolute bottom-4 text-center text-blue-300/70 text-sm">
+        &copy; {new Date().getFullYear()} The Entrepreneurship Club. All rights reserved.
+      </div>
     </div>
   )
 }
