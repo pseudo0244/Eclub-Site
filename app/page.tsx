@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -23,18 +24,39 @@ const teamMembers: TeamMember[] = [
   { name: "Anshul", position: "Head of Operations", image: "/Team/anshul.jpg" },
 ]
 
-// Gallery images - added more images
+
 const galleryImages = [
   "/Gallery/1.jpg",
   "/Gallery/2.jpg",
   "/Gallery/3.jpg",
   "/Gallery/4.jpeg",
   "/Gallery/5.jpeg",
-  "/Gallery/1.jpg", // Duplicated for demo
-  "/Gallery/2.jpg", // Duplicated for demo
-  "/Gallery/3.jpg", // Duplicated for demo
-  "/Gallery/4.jpeg", // Duplicated for demo
+  "/Gallery/1.jpg", 
+  "/Gallery/2.jpg", 
+  "/Gallery/3.jpg", 
+  "/Gallery/4.jpeg", 
 ]
+
+const events = [
+  {
+    title: "Brand Blitz",
+    date: "Coming Soon",
+    image: "/Events_past/brand.png",
+    link: "/events/brand-blitz", 
+  },
+  {
+    title: "Wolf of Wall Street",
+    date: "Coming Soon",
+    image: "/Events_past/wow.png",
+    link: "/events/wolf-wall-street", 
+  },
+  {
+    title: "E Summit 25",
+    date: "Coming Soon",
+    image: "/Events_past/esummit.png",
+    link: "/events/e-summit", 
+  },
+];
 
 export default function HomeAttachment() {
   return (
@@ -61,24 +83,21 @@ export default function HomeAttachment() {
           </div>
 
           <p className="text-lg sm:text-xl md:text-2xl mb-8 md:mb-12 text-blue-200 max-w-2xl mx-auto">
-            Have an idea but unsure what to do next? Fill out the form to collaborate with us!
+            Have an idea but unsure what to do next? Contact to collaborate with us!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="w-full sm:w-64 bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
-            >
-              Collab Now
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full sm:w-64 border-blue-400 text-blue-200 hover:bg-blue-900/30"
-            >
-              Events
-            </Button>
+            
+          <Button 
+  asChild
+  size="lg"
+  className="w-full sm:w-64 bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
+>
+  <Link href="/events">
+    Events
+    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+  </Link>
+</Button>
           </div>
         </div>
 
@@ -127,7 +146,7 @@ export default function HomeAttachment() {
 
             <div className="relative z-10 order-1 lg:order-2">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 lg:mb-8 leading-tight text-white">
-                E CLUB: <span className="text-blue-400">Fueling Entrepreneurship</span> at PESU
+                E Club: <span className="text-blue-400">Fueling Entrepreneurship</span> at PESU
               </h2>
               <div className="space-y-4 md:space-y-6 text-base md:text-lg text-blue-200">
                 <p>
@@ -160,76 +179,55 @@ export default function HomeAttachment() {
       </section>
 
       {/* Events Section */}
-      <section id="coming-soon" className="py-16 md:py-20 px-4 bg-gradient-to-r from-[#050A1C] to-[#0F1A3B]">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            <span className="text-blue-400">Upcoming</span> Events
-          </h2>
-          <p className="text-blue-300/70 mt-2 md:mt-4 mb-8">Stay tuned for exciting updates!</p>
+      <section
+      id="coming-soon"
+      className="py-16 md:py-20 px-4 bg-gradient-to-r from-[#050A1C] to-[#0F1A3B]"
+    >
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+          <span className="text-blue-400">Upcoming</span> Events
+        </h2>
+        <p className="text-blue-300/70 mt-2 md:mt-4 mb-8">
+          Stay tuned for exciting updates!
+        </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="bg-black/40 border-blue-900 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 overflow-hidden group">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {events.map((event, index) => (
+            <Card
+              key={index}
+              className="bg-black/40 border-blue-900 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 overflow-hidden group"
+            >
               <div className="h-48 overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Event"
+                  src={event.image}
+                  alt={event.title}
                   width={600}
                   height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-white">Brand Blitz</h3>
-                <p className="text-blue-200 mb-4">Coming Soon</p>
-                <Button variant="outline" className="w-full border-blue-400 text-blue-200 hover:bg-blue-900/30 group">
-                  Learn More
-                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </CardContent>
-            </Card>
+                <h3 className="text-xl font-bold mb-2 text-white">
+                  {event.title}
+                </h3>
+                <p className="text-blue-200 mb-4">{event.date}</p>
+                <Button
+  asChild
+  variant="outline"
+  className="w-full bg-blue-600 text-white border-blue-600"
+>
+  <Link href={event.link}>
+    Learn More
+    <ExternalLink className="ml-2 h-4 w-4" />
+  </Link>
+</Button>
 
-            <Card className="bg-black/40 border-blue-900 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 overflow-hidden group">
-              <div className="h-48 overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Event"
-                  width={600}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-white">Wolf of Wall Street </h3>
-                <p className="text-blue-200 mb-4">Coming Soon</p>
-                <Button variant="outline" className="w-full border-blue-400 text-blue-200 hover:bg-blue-900/30 group">
-                  Learn More
-                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </CardContent>
             </Card>
-
-            <Card className="bg-black/40 border-blue-900 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 overflow-hidden group">
-              <div className="h-48 overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Event"
-                  width={600}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-white">E Summit 25</h3>
-                <p className="text-blue-200 mb-4">Coming Soon</p>
-                <Button variant="outline" className="w-full border-blue-400 text-blue-200 hover:bg-blue-900/30 group">
-                  Learn More
-                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/*GALLERY SECTION*/}
       <section id="gallery" className="py-16 md:py-20 px-4">
@@ -242,7 +240,7 @@ export default function HomeAttachment() {
             {galleryImages.map((image, index) => (
               <div
                 key={index}
-                className="overflow-hidden rounded-lg shadow-md border border-blue-900/50 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 group"
+                className="overflow-hidden rounded-lg border border-blue-900/50 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 group"
               >
                 <Image
                   src={image || "/placeholder.svg"}
@@ -256,10 +254,13 @@ export default function HomeAttachment() {
           </div>
 
           <div className="text-center">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300">
-              View All Photos
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+          <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300">
+  <Link href="/gallery">
+    View All Photos
+    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+  </Link>
+</Button>
+
           </div>
         </div>
       </section>
@@ -303,7 +304,7 @@ export default function HomeAttachment() {
               <h3 className="text-xl font-bold mb-4 text-white">The Entrepreneurship Club</h3>
               <p className="text-blue-200 mb-4">Fostering innovation and entrepreneurship at PESU.</p>
               <div className="flex space-x-4">
-                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                <a href="www.instagram.com" className="text-blue-400 hover:text-blue-300 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -321,7 +322,7 @@ export default function HomeAttachment() {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                   </svg>
                 </a>
-                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                <a href="www.x.com" className="text-blue-400 hover:text-blue-300 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -337,7 +338,7 @@ export default function HomeAttachment() {
                     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                   </svg>
                 </a>
-                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                <a href="www." className="text-blue-400 hover:text-blue-300 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -372,7 +373,7 @@ export default function HomeAttachment() {
                   </a>
                 </li>
                 <li>
-                  <a href="#coming-soon" className="text-blue-200 hover:text-blue-100 transition-colors">
+                  <a href="#events" className="text-blue-200 hover:text-blue-100 transition-colors">
                     Events
                   </a>
                 </li>
@@ -382,8 +383,8 @@ export default function HomeAttachment() {
                   </a>
                 </li>
                 <li>
-                  <a href="#team" className="text-blue-200 hover:text-blue-100 transition-colors">
-                    Team
+                  <a href="#archive" className="text-blue-200 hover:text-blue-100 transition-colors">
+                    Archive
                   </a>
                 </li>
               </ul>

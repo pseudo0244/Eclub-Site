@@ -1,157 +1,321 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import type React from "react"
+
+import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Instagram, Twitter, Linkedin, Mail, ArrowRight } from 'lucide-react'
+import Header from "@/components/ui/header"
+import { ArrowRight, CheckCircle } from "lucide-react"
+import Footer from "@/components/ui/footer"
 
-export default function ComingSoon() {
-  const [email, setEmail] = useState("")
-  const [days, setDays] = useState(0)
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+// Type definitions
+interface TimelineEvent {
+  year: string
+  title: string
+  description: string
+  image: string
+}
 
-  // Set launch date to 30 days from now
-  useEffect(() => {
-    const launchDate = new Date()
-    launchDate.setDate(launchDate.getDate() + 15)
-    
-    const interval = setInterval(() => {
-      const now = new Date()
-      const difference = launchDate.getTime() - now.getTime()
-      
-      const d = Math.floor(difference / (1000 * 60 * 60 * 24))
-      const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-      const s = Math.floor((difference % (1000 * 60)) / 1000)
-      
-      setDays(d)
-      setHours(h)
-      setMinutes(m)
-      setSeconds(s)
-      
-      if (difference <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-    
-    return () => clearInterval(interval)
-  }, [])
-  
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Handle email submission logic here
-    alert(`Thank you! We'll notify ${email} when we launch.`)
-    setEmail("")
-  }
-  
+interface TimelineItemProps {
+  event: TimelineEvent
+  index: number
+  isLast: boolean
+}
+
+// Timeline data
+const timelineEvents: TimelineEvent[] = [
+  {
+    year: "2018",
+    title: "Club Foundation",
+    description:
+      "The Entrepreneurship Club was founded with a vision to foster innovation and entrepreneurial spirit among students at PESU.",
+    image: "/placeholder.svg?height=400&width=600",
+  },
+  {
+    year: "2019",
+    title: "First E-Summit",
+    description:
+      "Successfully organized our first E-Summit with over 500 participants, featuring workshops, panel discussions, and a startup expo.",
+    image: "/placeholder.svg?height=400&width=600",
+  },
+  {
+    year: "2020",
+    title: "Virtual Transition",
+    description:
+      "Adapted to the pandemic by transitioning to virtual events, reaching a wider audience and hosting international speakers.",
+    image: "/placeholder.svg?height=400&width=600",
+  },
+]
+
+// Our values data
+const ourValues = [
+  {
+    title: "Innovation",
+    description: "We encourage creative thinking and novel approaches to solving problems.",
+  },
+  {
+    title: "Collaboration",
+    description: "We believe in the power of teamwork and collective intelligence.",
+  },
+  {
+    title: "Resilience",
+    description: "We embrace failures as learning opportunities and persist through challenges.",
+  },
+  {
+    title: "Impact",
+    description: "We strive to create meaningful change in our community and beyond.",
+  },
+]
+
+// Timeline Item component with animation
+const TimelineItem: React.FC<TimelineItemProps> = ({ event, index, isLast }) => {
+  const isEven = index % 2 === 0
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#050A1C] to-[#0F1A3B] text-white px-4">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#1e3a8a_0.1,transparent_2px)] bg-[length:24px_24px]"></div>
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-      
-      {/* Animated Stars */}
-      <div className="stars absolute inset-0 overflow-hidden opacity-70">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div 
-            key={i}
-            className="star absolute w-1 h-1 bg-white rounded-full animate-pulse"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          ></div>
-        ))}
-      </div>
-      
-      {/* Main Content */}
-      <div className="relative z-10 max-w-3xl w-full text-center space-y-8 backdrop-blur-sm p-8 rounded-2xl border border-blue-900/30 shadow-[0_0_25px_rgba(59,130,246,0.2)]">
-        {/* Logo or Brand Name */}
-        <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-          <span className="text-2xl font-bold">Hey</span>
-        </div>
-        
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          <span className="block">We're</span>
-          <span className="block text-blue-400 mt-2">Coming Soon</span>
-        </h1>
-        
-        <p className="text-lg md:text-xl text-blue-200 max-w-xl mx-auto">
-          We're working hard to bring you something amazing. Stay tuned for updates on our launch.
-        </p>
-        
-        {/* Countdown Timer */}
-        <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto">
-          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            <div className="text-2xl md:text-4xl font-bold text-white">{days}</div>
-            <div className="text-xs md:text-sm text-blue-300">Days</div>
-          </div>
-          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            <div className="text-2xl md:text-4xl font-bold text-white">{hours}</div>
-            <div className="text-xs md:text-sm text-blue-300">Hours</div>
-          </div>
-          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            <div className="text-2xl md:text-4xl font-bold text-white">{minutes}</div>
-            <div className="text-xs md:text-sm text-blue-300">Minutes</div>
-          </div>
-          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            <div className="text-2xl md:text-4xl font-bold text-white">{seconds}</div>
-            <div className="text-xs md:text-sm text-blue-300">Seconds</div>
+    <div className="relative">
+      {/* Timeline line */}
+      {!isLast && <div className="absolute left-[19px] top-7 w-1 bg-blue-600/50 h-full z-0"></div>}
+
+      <div className="grid md:grid-cols-[40px_1fr] gap-4 md:gap-8 mb-12 relative z-10">
+        {/* Year bubble */}
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+            {index + 1}
           </div>
         </div>
-        
-        {/* Notification Form */}
-        <div className="max-w-md mx-auto w-full mt-8">
-          <p className="text-sm text-blue-200 mb-4">Get notified when we launch:</p>
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="bg-black/30 border-blue-900/50 text-white placeholder:text-blue-300/50 focus:border-blue-400 focus:ring-blue-400/20"
-            />
-            <Button 
-              type="submit" 
-              className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
-            >
-              Notify Me
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </form>
+
+        {/* Content */}
+        <div className="grid md:grid-cols-2 gap-6 items-center">
+          <div className={`order-2 ${isEven ? "md:order-2" : "md:order-1"}`}>
+            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-6 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+              <div className="text-blue-400 font-bold mb-1">{event.year}</div>
+              <h3 className="text-xl font-bold mb-3 text-white">{event.title}</h3>
+              <p className="text-blue-200">{event.description}</p>
+            </div>
+          </div>
+          <div className={`order-1 ${isEven ? "md:order-1" : "md:order-2"}`}>
+            <div className="overflow-hidden rounded-xl border border-blue-900/50 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 group">
+              <Image
+                src={event.image || "/placeholder.svg"}
+                alt={event.title}
+                width={600}
+                height={400}
+                className="w-full h-48 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+          </div>
         </div>
-        
-        {/* Social Media Links */}
-        <div className="flex justify-center space-x-6 mt-8">
-          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
-            <Instagram size={20} />
-            <span className="sr-only">Instagram</span>
-          </a>
-          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
-            <Twitter size={20} />
-            <span className="sr-only">Twitter</span>
-          </a>
-          <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
-            <Linkedin size={20} />
-            <span className="sr-only">LinkedIn</span>
-          </a>
-          <a href="mailto:info@example.com" className="text-blue-400 hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-blue-900/30">
-            <Mail size={20} />
-            <span className="sr-only">Email</span>
-          </a>
-        </div>
-      </div>
-      
-      {/* Footer */}
-      <div className="absolute bottom-4 text-center text-blue-300/70 text-sm">
-        &copy; {new Date().getFullYear()} The Entrepreneurship Club. All rights reserved.
       </div>
     </div>
   )
 }
+
+export default function AboutUs() {
+  return (
+    <div className="min-h-screen bg-[#050A1C] text-white">
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-28 px-4 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#1e3a8a_0.1,transparent_2px)] bg-[length:24px_24px]"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Our <span className="text-blue-400">Journey</span> of Innovation
+              </h1>
+              <p className="text-lg text-blue-200 mb-8">
+                Discover the story behind The Entrepreneurship Club, our mission, values, and the impact we've made in
+                fostering the next generation of entrepreneurs.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300">
+                  <Link href="/archive">
+                    Our Archive
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="border-blue-600 text-blue-400 hover:bg-blue-950/50">
+                  <Link href="#timeline">Our Timeline</Link>
+                </Button>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="relative z-10 rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 shadow-[0_0_25px_rgba(59,130,246,0.3)]">
+                <Image
+                  src="/assets/comingsoon.webp"
+                  alt="Team collaboration"
+                  width={600}
+                  height={600}
+                  className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+              </div>
+              {/* Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-36 sm:w-48 md:w-72 h-36 sm:h-48 md:h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-36 sm:w-48 md:w-72 h-36 sm:h-48 md:h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+      <section id="mission" className="py-16 md:py-24 px-4 bg-gradient-to-r from-[#050A1C] to-[#0F1A3B]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <div className="relative">
+                <div className="relative z-10 rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 shadow-[0_0_25px_rgba(59,130,246,0.3)]">
+                  <Image
+                    src="/assets/comingsoon.webp"
+                    alt="Our mission"
+                    width={600}
+                    height={600}
+                    className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -right-4 w-36 sm:w-48 md:w-72 h-36 sm:h-48 md:h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-4 -left-4 w-36 sm:w-48 md:w-72 h-36 sm:h-48 md:h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                Our <span className="text-blue-400">Mission</span>
+              </h2>
+              <div className="space-y-6 text-blue-200">
+                <p>
+                  At The Entrepreneurship Club, our mission is to cultivate an environment where innovation thrives and
+                  entrepreneurial mindsets are developed. We aim to bridge the gap between academic learning and
+                  real-world business challenges.
+                </p>
+                <p>
+                  We provide students with the tools, resources, and connections they need to transform their ideas into
+                  viable businesses. Through workshops, mentorship programs, networking events, and startup
+                  competitions, we create opportunities for hands-on learning and growth.
+                </p>
+                <p>
+                  Our goal is to inspire and empower the next generation of entrepreneurs who will drive economic growth
+                  and create positive social impact through their ventures.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16 md:py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+              Our <span className="text-blue-400">Values</span>
+            </h2>
+            <p className="text-blue-200 max-w-2xl mx-auto">
+              These core principles guide our approach and define our community
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ourValues.map((value, index) => (
+              <div
+                key={index}
+                className="bg-black/40 border border-blue-900/50 rounded-xl p-6 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300"
+              >
+                <CheckCircle className="h-10 w-10 text-blue-400 mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-white">{value.title}</h3>
+                <p className="text-blue-200">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section id="timeline" className="py-16 md:py-24 px-4 bg-gradient-to-r from-[#050A1C] to-[#0F1A3B]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+              Our <span className="text-blue-400">Timeline</span>
+            </h2>
+            <p className="text-blue-200 max-w-2xl mx-auto">
+              Tracing our journey from inception to where we stand today
+            </p>
+          </div>
+
+          <div className="ml-4 md:ml-0">
+            {timelineEvents.map((event, index) => (
+              <TimelineItem key={index} event={event} index={index} isLast={index === timelineEvents.length - 1} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 md:py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-8 text-center shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+              <div className="text-4xl font-bold text-blue-400 mb-2">30+</div>
+              <div className="text-white font-medium">Events Hosted</div>
+            </div>
+            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-8 text-center shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+              <div className="text-4xl font-bold text-blue-400 mb-2">5+</div>
+              <div className="text-white font-medium">Startups Launched</div>
+            </div>
+            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-8 text-center shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+              <div className="text-4xl font-bold text-blue-400 mb-2">50+</div>
+              <div className="text-white font-medium">Active Members</div>
+            </div>
+            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-8 text-center shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+              <div className="text-4xl font-bold text-blue-400 mb-2">10+</div>
+              <div className="text-white font-medium">Industry Partners</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-black/40 border border-blue-900/50 rounded-2xl p-8 md:p-12 shadow-[0_0_25px_rgba(59,130,246,0.3)]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+              Join Our <span className="text-blue-400">Community</span>
+            </h2>
+            <p className="text-blue-200 mb-8 max-w-2xl mx-auto">
+              Be part of a vibrant community of innovators, dreamers, and doers. Whether you have a business idea or
+              just want to learn more about entrepreneurship, we welcome you to join us.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
+              >
+                <Link href="/join">
+                  Become a Member
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-blue-600 text-blue-400 hover:bg-blue-950/50"
+              >
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
+}
+
