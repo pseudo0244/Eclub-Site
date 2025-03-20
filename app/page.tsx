@@ -31,9 +31,9 @@ const galleryImages = [
   "/Gallery/3.jpg",
   "/Gallery/4.jpeg",
   "/Gallery/5.jpeg",
-  "/Gallery/1.jpg", 
-  "/Gallery/2.jpg", 
-  "/Gallery/3.jpg", 
+  "/Gallery/6.jpg", 
+  "/Gallery/7.jpg", 
+  "/Gallery/8.jpg", 
   "/Gallery/4.jpeg", 
 ]
 
