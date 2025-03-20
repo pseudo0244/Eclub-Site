@@ -128,9 +128,10 @@ export default function AboutUs() {
                 Our <span className="text-blue-400">Journey</span> of Innovation
               </h1>
               <p className="text-lg text-blue-200 mb-8">
-                Discover the story behind The Entrepreneurship Club, our mission, values, and the impact we've made in
-                fostering the next generation of entrepreneurs.
-              </p>
+  Discover the story behind The Entrepreneurship Club, our mission, values, and the impact we&apos;ve made in
+  fostering the next generation of entrepreneurs.
+</p>
+
               <div className="flex flex-wrap gap-4">
                 <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300">
                   <Link href="/archive">

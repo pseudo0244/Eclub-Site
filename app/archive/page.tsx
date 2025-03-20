@@ -109,9 +109,8 @@ export default function ArchivePage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Event <span className="text-blue-400">Archive</span>
             </h1>
-            <p className="text-lg text-blue-200 mb-8 max-w-2xl mx-auto">
-              Explore our past events and the impact they've made on our entrepreneurial community
-            </p>
+            <p>Explore our past events and the impact they&apos;ve made on our entrepreneurial community</p>
+
           </div>
         </section>
 
