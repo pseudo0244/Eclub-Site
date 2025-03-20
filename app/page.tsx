@@ -26,8 +26,8 @@ const teamMembers: TeamMember[] = [
 
 
 const galleryImages = [
-  "/Gallery/1.jpg",
-  "/Gallery/2.jpg",
+  "/Gallery/1.JPG",
+  "/Gallery/2.JPG",
   "/Gallery/3.jpg",
   "/Gallery/4.jpeg",
   "/Gallery/5.jpeg",
