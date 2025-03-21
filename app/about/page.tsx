@@ -33,15 +33,15 @@ const timelineEvents: TimelineEvent[] = [
     image: "/placeholder.svg?height=400&width=600",
   },
   {
-    year: "2019",
-    title: "First E-Summit",
+    year: "2020",
+    title: "First Virtual Event",
     description:
-      "Successfully organized our first E-Summit with over 500 participants, featuring workshops, panel discussions, and a startup expo.",
+      "Successfully organized our first online event with over 150+ participants, featuring workshops, panel discussions, and a startup expo.",
     image: "/placeholder.svg?height=400&width=600",
   },
   {
-    year: "2020",
-    title: "Virtual Transition",
+    year: "2023",
+    title: "First SHE-Summit",
     description:
       "Adapted to the pandemic by transitioning to virtual events, reaching a wider audience and hosting international speakers.",
     image: "/placeholder.svg?height=400&width=600",
@@ -70,8 +70,6 @@ const ourValues = [
 
 // Timeline Item component with animation
 const TimelineItem: React.FC<TimelineItemProps> = ({ event, index, isLast }) => {
-  const isEven = index % 2 === 0
-
   return (
     <div className="relative">
       {/* Timeline line */}
@@ -86,30 +84,15 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ event, index, isLast }) => 
         </div>
 
         {/* Content */}
-        <div className="grid md:grid-cols-2 gap-6 items-center">
-          <div className={`order-2 ${isEven ? "md:order-2" : "md:order-1"}`}>
-            <div className="bg-black/40 border border-blue-900/50 rounded-xl p-6 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
-              <div className="text-blue-400 font-bold mb-1">{event.year}</div>
-              <h3 className="text-xl font-bold mb-3 text-white">{event.title}</h3>
-              <p className="text-blue-200">{event.description}</p>
-            </div>
-          </div>
-          <div className={`order-1 ${isEven ? "md:order-1" : "md:order-2"}`}>
-            <div className="overflow-hidden rounded-xl border border-blue-900/50 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300 group">
-              <Image
-                src={event.image || "/placeholder.svg"}
-                alt={event.title}
-                width={600}
-                height={400}
-                className="w-full h-48 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-          </div>
+        <div className="bg-black/40 border border-blue-900/50 rounded-xl p-6 shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+          <div className="text-blue-400 font-bold mb-1">{event.year}</div>
+          <h3 className="text-xl font-bold mb-3 text-white">{event.title}</h3>
+          <p className="text-blue-200">{event.description}</p>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default function AboutUs() {
   return (
@@ -147,7 +130,7 @@ export default function AboutUs() {
             <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 shadow-[0_0_25px_rgba(59,130,246,0.3)]">
                 <Image
-                  src="/assets/comingsoon.webp"
+                  src="/assets/innovation.jpg"
                   alt="Team collaboration"
                   width={600}
                   height={600}
@@ -171,7 +154,7 @@ export default function AboutUs() {
               <div className="relative">
                 <div className="relative z-10 rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 shadow-[0_0_25px_rgba(59,130,246,0.3)]">
                   <Image
-                    src="/assets/comingsoon.webp"
+                    src="/assets/mission.png"
                     alt="Our mission"
                     width={600}
                     height={600}
@@ -297,8 +280,8 @@ export default function AboutUs() {
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 text-white group transition-all duration-300"
               >
-                <Link href="/join">
-                  Become a Member
+                <Link href="https://www.instagram.com/entrepreneurshipclub.pes/">
+                  Follow us on instagram
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
